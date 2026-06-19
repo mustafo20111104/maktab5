@@ -356,6 +356,28 @@
     color: var(--olive);
     font-weight: 600;
   }
+  .teach-card-add{
+    border: 2px dashed var(--cream-deep);
+    border-radius: 6px;
+    padding: 18px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .teach-avatar-add{
+    background: var(--cream);
+    border: 3px dashed var(--ink-soft);
+    color: var(--ink-soft);
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+  .teach-add-text{
+    color: var(--ink-soft);
+    font-weight: 400;
+    font-size: 0.88rem;
+    font-style: italic;
+  }
 
   /* ============ GALLERY (rasm o'rni - placeholder) ============ */
   .gallery{ background: var(--cream); }
@@ -421,11 +443,43 @@
   footer{
     background: #1f1a16;
     color: var(--cream-deep);
-    padding: 32px 28px;
+    padding: 48px 28px 28px;
     text-align:center;
     font-family: 'Trebuchet MS', sans-serif;
     font-size: 0.82rem;
   }
+  .creator-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(246,237,224,0.14);
+  }
+  .creator-avatar{
+    width: 64px; height:64px;
+    border-radius: 50%;
+    background: rgba(246,237,224,0.06);
+    border: 2px dashed var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .creator-avatar-icon{ font-size: 1.5rem; opacity:0.7; }
+  .creator-text{ text-align:left; }
+  .creator-label{
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .creator-name{
+    font-family: 'Palatino Linotype', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+  }
+  .footer-copy{ color: var(--cream-deep); }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 880px){
@@ -468,7 +522,7 @@
         <ul>
           <li><a href="#about">Maktab haqida</a></li>
           <li><a href="#news">Yangiliklar</a></li>
-          <li><a href="#teachers">O‘qituvchilar</a></li>
+          <li><a href="#teachers">Sayt haqida</a></li>
           <li><a href="#gallery">Galereya</a></li>
           <li><a href="#contact">Bog‘lanish</a></li>
         </ul>
@@ -591,39 +645,51 @@
     </div>
   </section>
 
-  <!-- ============ TEACHERS ============ -->
+  <!-- ============ SITE CREATOR ============ -->
   <section class="teachers" id="teachers">
     <div class="section-wrap">
       <div class="section-head">
         <span class="label">Jamoamiz</span>
         <h2>O‘qituvchilarimiz</h2>
-        <h3>Abduqahharov Kamolbek Azimjon o'g'li</h3>
-        <h3>Maxmudjanov Mustafo Olimjon o'g'li</h3>
+        <p>Quyida maktabimizning faxri bo‘lgan ustozlar ro‘yxati keltirilgan.</p>
       </div>
-      <div class="teach-grid">
-        <div class="teach-card">
-          <div class="teach-avatar">A</div>
-          <h3>Ism Familiya</h3>
-          <div class="subj">Matematika</div>
-        </div>
-        <div class="teach-card">
-          <div class="teach-avatar">B</div>
-          <h3>Ism Familiya</h3>
-          <div class="subj">Ona tili</div>
-        </div>
-        <div class="teach-card">
-          <div class="teach-avatar">D</div>
-          <h3>Ism Familiya</h3>
-          <div class="subj">Tarix</div>
-        </div>
-        <div class="teach-card">
-          <div class="teach-avatar">G</div>
-          <h3>Ism Familiya</h3>
-          <div class="subj">Fizika</div>
-        </div>
-      </div>
+      <div class="teach-grid" id="teach-grid"></div>
     </div>
   </section>
+
+  <script>
+    /* ====== O'QITUVCHILAR RO'YXATI ======
+       Har bir o'qituvchi uchun bitta qator qo'shing: { ism: "...", fan: "..." }
+       Eng oxirgi qatordan keyin vergul QO'YMANG.
+       Jami 80 tagacha (yoki istalgancha) qo'sha olasiz — sayt avtomatik chizadi. */
+    const oqituvchilar = [
+      { ism: "Maxmudjanov Mustafo Olimjon o‘g‘li", fan: "Sayt yaratuvchisi" },
+      { ism: "Abduqahharov Kamolbek Azimjon o‘g‘li", fan: "" },
+      // Bu yerga davom ettiring, masalan:
+      // { ism: "Karimova Dilnoza", fan: "Matematika" },
+      // { ism: "Yusupova Farangiz", fan: "Ona tili va adabiyot" },
+    ];
+
+    const grid = document.getElementById('teach-grid');
+    oqituvchilar.forEach(function(o){
+      const harf = o.ism.trim().charAt(0).toUpperCase();
+      const card = document.createElement('div');
+      card.className = 'teach-card';
+      card.innerHTML =
+        '<div class="teach-avatar">' + harf + '</div>' +
+        '<h3>' + o.ism + '</h3>' +
+        (o.fan ? '<div class="subj">' + o.fan + '</div>' : '');
+      grid.appendChild(card);
+    });
+
+    // "Yana o'qituvchi qo'shish" — ro'yxat hali to'liq emasligini ko'rsatadigan bo'sh karta
+    const addCard = document.createElement('div');
+    addCard.className = 'teach-card teach-card-add';
+    addCard.innerHTML =
+      '<div class="teach-avatar teach-avatar-add">+</div>' +
+      '<h3 class="teach-add-text">Yana o‘qituvchi<br>qo‘shish</h3>';
+    grid.appendChild(addCard);
+  </script>
 
   <!-- ============ GALLERY ============ -->
   <section class="gallery" id="gallery">
@@ -683,7 +749,16 @@
   </section>
 
   <footer>
-    © 2026 — 5-maktab, Hizirobod qishlog‘i, Uychi tumani, Namangan viloyati. Barcha huquqlar himoyalangan.
+    <div class="creator-box">
+      <div class="creator-avatar">
+        <span class="creator-avatar-icon">📷</span>
+      </div>
+      <div class="creator-text">
+        <div class="creator-label">Sayt yaratuvchisi</div>
+        <div class="creator-name">Maxmudjanov Mustafo</div>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 — 5-maktab, Hizirobod qishlog‘i, Uychi tumani, Namangan viloyati. Barcha huquqlar himoyalangan.</div>
   </footer>
 
 </body>
