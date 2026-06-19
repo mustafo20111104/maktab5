@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5-maktab — Hizirobod, Uychi</title>
+<style>
+
+  /* ============ TOKENLAR (ranglar, shriftlar) ============ */
+  :root{
+    --terracotta: #b5562f;
+    --terracotta-dark: #8c3f20;
+    --cream: #f6ede0;
+    --cream-deep: #ecdfc9;
+    --ink: #2b2420;
+    --ink-soft: #5c5044;
+    --olive: #5e6b3e;
+    --gold: #c79a3d;
+    --white: #fffdf9;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Georgia', 'Noto Serif', serif;
+    line-height: 1.6;
+  }
+
+  h1,h2,h3, .display{
+    font-family: 'Palatino Linotype', 'Georgia', serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .label{
+    font-family: 'Trebuchet MS', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  img{ max-width: 100%; display:block; }
+
+  /* ============ NAQSH CHIZIQ (signature element) ============ */
+  .naqsh-line{
+    height: 14px;
+    width: 100%;
+    background-image:
+      repeating-linear-gradient(45deg,
+        var(--terracotta) 0 6px,
+        var(--gold) 6px 12px,
+        var(--olive) 12px 18px,
+        var(--terracotta) 18px 24px);
+    opacity: 0.9;
+  }
+
+  /* ============ HEADER / NAV ============ */
+  header{
+    background: var(--white);
+    position: sticky;
+    top:0;
+    z-index: 50;
+    border-bottom: 1px solid var(--cream-deep);
+  }
+  .nav-wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 28px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+  }
+  .brand-badge{
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-family: 'Palatino Linotype', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    border: 3px solid var(--gold);
+  }
+  .brand-text .school-name{
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .brand-text .school-loc{
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  nav a{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover, nav a:focus-visible{
+    color: var(--terracotta-dark);
+    border-color: var(--terracotta);
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    background: var(--cream);
+    padding: 76px 28px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items:center;
+  }
+  .hero .label{ color: var(--olive); margin-bottom: 18px; display:block; }
+  .hero h1{
+    font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+    line-height: 1.12;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--terracotta);
+  }
+  .hero p{
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+    max-width: 46ch;
+    margin-bottom: 30px;
+  }
+  .hero-ctas{ display:flex; gap: 16px; flex-wrap: wrap; }
+  .btn{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 14px 26px;
+    border-radius: 2px;
+    display:inline-block;
+    border: 2px solid var(--terracotta);
+    transition: transform .15s, background .2s, color .2s;
+  }
+  .btn-fill{
+    background: var(--terracotta);
+    color: var(--white);
+  }
+  .btn-fill:hover{ background: var(--terracotta-dark); transform: translateY(-2px); }
+  .btn-outline{
+    background: transparent;
+    color: var(--terracotta-dark);
+  }
+  .btn-outline:hover{ background: var(--terracotta); color: var(--white); transform: translateY(-2px); }
+
+  /* Hero o'rniga rasm bo'lmagani uchun — naqshli "medalyon" grafika */
+  .hero-art{
+    position: relative;
+    aspect-ratio: 1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .medallion{
+    width: 88%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--cream-deep);
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow: 0 30px 60px -20px rgba(43,36,32,0.25);
+    position: relative;
+  }
+  .medallion::before{
+    content:"";
+    position:absolute;
+    inset: 14px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--gold);
+  }
+  .medallion .num{
+    font-family: 'Palatino Linotype', serif;
+    font-size: 4.4rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    line-height:1;
+  }
+  .medallion .num-label{
+    font-family: 'Trebuchet MS', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .medallion .since{
+    margin-top: 18px;
+    font-size: 0.85rem;
+    color: var(--olive);
+    font-weight: 600;
+  }
+
+  /* ============ STATS STRIP ============ */
+  .stats{
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0;
+  }
+  .stats-wrap{
+    max-width: 1100px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .stat{
+    padding: 38px 24px;
+    text-align:center;
+    border-left: 1px solid rgba(246,237,224,0.12);
+  }
+  .stat:first-child{ border-left:none; }
+  .stat .stat-num{
+    font-family: 'Palatino Linotype', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stat .stat-label{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.82rem;
+    color: var(--cream-deep);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ SECTION COMMON ============ */
+  section{ padding: 80px 28px; }
+  .section-wrap{ max-width: 1100px; margin: 0 auto; }
+  .section-head{ max-width: 60ch; margin-bottom: 48px; }
+  .section-head .label{ color: var(--olive); margin-bottom: 14px; }
+  .section-head h2{
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: var(--ink);
+  }
+  .section-head p{ color: var(--ink-soft); margin-top: 14px; }
+
+  /* ============ ABOUT (maktab haqida) ============ */
+  .about{ background: var(--white); }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .about-card{
+    background: var(--cream);
+    padding: 32px;
+    border-left: 4px solid var(--terracotta);
+  }
+  .about-card h3{ font-size: 1.15rem; margin-bottom: 10px; color: var(--ink); }
+  .about-card p{ color: var(--ink-soft); font-size: 0.96rem; }
+  .about-list{ display:flex; flex-direction:column; gap: 22px; }
+
+  /* ============ NEWS (yangiliklar) ============ */
+  .news{ background: var(--cream); }
+  .news-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .news-card{
+    background: var(--white);
+    border: 1px solid var(--cream-deep);
+    display:flex;
+    flex-direction:column;
+  }
+  .news-thumb{
+    height: 150px;
+    background: linear-gradient(135deg, var(--terracotta) 0%, var(--gold) 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .news-thumb::after{
+    content: "";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 10px, transparent 10px 20px);
+  }
+  .news-body{ padding: 22px; flex:1; display:flex; flex-direction:column; }
+  .news-date{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--terracotta-dark);
+    margin-bottom: 8px;
+  }
+  .news-body h3{ font-size: 1.05rem; margin-bottom: 10px; }
+  .news-body p{ color: var(--ink-soft); font-size: 0.9rem; flex:1; }
+  .news-link{
+    margin-top: 14px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--terracotta);
+  }
+
+  /* ============ TEACHERS (o'qituvchilar) ============ */
+  .teachers{ background: var(--white); }
+  .teach-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+  .teach-card{ text-align:center; }
+  .teach-avatar{
+    width: 96px; height:96px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    background: var(--cream-deep);
+    border: 3px solid var(--terracotta);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Palatino Linotype', serif;
+    font-size: 1.5rem;
+    font-weight:700;
+    color: var(--terracotta-dark);
+  }
+  .teach-card h3{ font-size: 1rem; margin-bottom: 4px; }
+  .teach-card .subj{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.8rem;
+    color: var(--olive);
+    font-weight: 600;
+  }
+
+  /* ============ GALLERY (rasm o'rni - placeholder) ============ */
+  .gallery{ background: var(--cream); }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .gallery-item{
+    aspect-ratio: 4/3;
+    background: var(--cream-deep);
+    border: 2px dashed var(--ink-soft);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    color: var(--ink-soft);
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.8rem;
+    text-align:center;
+    padding: 10px;
+  }
+  .gallery-item .icon{ font-size: 1.8rem; }
+
+  /* ============ CONTACT (bog'lanish) ============ */
+  .contact{ background: var(--ink); color: var(--cream); }
+  .contact .section-head h2{ color: var(--white); }
+  .contact .section-head p{ color: var(--cream-deep); }
+  .contact .label{ color: var(--gold); }
+  .contact-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .contact-info{ display:flex; flex-direction:column; gap: 26px; }
+  .contact-row{ display:flex; gap: 16px; align-items:flex-start; }
+  .contact-row .icon{
+    width: 40px; height:40px;
+    background: rgba(199,154,61,0.15);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 1.1rem;
+  }
+  .contact-row h3{ font-size: 0.95rem; color: var(--white); margin-bottom: 4px; }
+  .contact-row p{ font-size: 0.9rem; color: var(--cream-deep); }
+
+  .map-box{
+    background: rgba(246,237,224,0.06);
+    border: 1px solid rgba(246,237,224,0.18);
+    padding: 28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap: 14px;
+  }
+  .map-box h3{ color: var(--white); font-size: 1.05rem; }
+  .map-box p{ color: var(--cream-deep); font-size: 0.9rem; }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background: #1f1a16;
+    color: var(--cream-deep);
+    padding: 32px 28px;
+    text-align:center;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 0.82rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px){
+    .hero-wrap{ grid-template-columns: 1fr; }
+    .hero-art{ order:-1; max-width: 280px; margin: 0 auto; }
+    .stats-wrap{ grid-template-columns: 1fr; }
+    .stat{ border-left:none; border-top:1px solid rgba(246,237,224,0.12); }
+    .stat:first-child{ border-top:none; }
+    .about-grid{ grid-template-columns: 1fr; gap: 32px; }
+    .news-grid{ grid-template-columns: 1fr; }
+    .teach-grid{ grid-template-columns: repeat(2,1fr); }
+    .gallery-grid{ grid-template-columns: repeat(2,1fr); }
+    .contact-grid{ grid-template-columns: 1fr; gap: 32px; }
+    nav ul{ gap: 16px; }
+  }
+
+  /* Keyboard focus ko'rinishi */
+  a:focus-visible, .btn:focus-visible{
+    outline: 3px solid var(--olive);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-wrap">
+      <div class="brand">
+        <div class="brand-badge">5</div>
+        <div class="brand-text">
+          <div class="school-name">5-maktab</div>
+          <div class="school-loc">Hizirobod qishlog‘i, Uychi tumani</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">Maktab haqida</a></li>
+          <li><a href="#news">Yangiliklar</a></li>
+          <li><a href="#teachers">O‘qituvchilar</a></li>
+          <li><a href="#gallery">Galereya</a></li>
+          <li><a href="#contact">Bog‘lanish</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="naqsh-line"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-wrap">
+      <div>
+        <span class="label">Namangan viloyati · Uychi tumani</span>
+        <h1>Hizirobod qishlog‘ining <em>5-maktabi</em></h1>
+        <p>Bilim, tarbiya va kelajakka ishonch — 1500 dan ortiq o‘quvchimiz har kuni shu maskanda orzularini quradi.</p>
+        <div class="hero-ctas">
+          <a href="#about" class="btn btn-fill">Maktab haqida</a>
+          <a href="#contact" class="btn btn-outline">Bog‘lanish</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="medallion">
+          <div class="num">1500+</div>
+          <div class="num-label">O‘quvchi</div>
+          <div class="since">Hizirobod, Uychi tumani</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <div class="stats">
+    <div class="stats-wrap">
+      <div class="stat">
+        <div class="stat-num">1500+</div>
+        <div class="stat-label">O‘QUVCHI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">№5</div>
+        <div class="stat-label">UMUMTA'LIM MAKTABI</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Uychi</div>
+        <div class="stat-label">NAMANGAN VILOYATI</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="section-wrap">
+      <div class="section-head">
+        <span class="label">Tanishuv</span>
+        <h2>Maktabimiz haqida</h2>
+        <p>Hizirobod qishlog‘ida joylashgan 5-maktab — tumandagi yirik umumta'lim maskanlaridan biri bo‘lib, har yili minglab farzandlarimizga sifatli ta'lim bermoqda.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-list">
+          <div class="about-card">
+            <h3>Joylashuvi</h3>
+            <p>Maktab Namangan viloyati, Uychi tumani, Hizirobod qishlog‘ida joylashgan bo‘lib, qishloq aholisi uchun asosiy ta'lim maskani hisoblanadi.</p>
+          </div>
+          <div class="about-card">
+            <h3>O‘quvchilar soni</h3>
+            <p>Hozirgi kunda maktabimizda 1500 nafardan ortiq o‘quvchi tahsil olmoqda — bu tumandagi eng katta maktablardan biri ekanligini ko‘rsatadi.</p>
+          </div>
+        </div>
+        <div class="about-list">
+          <div class="about-card">
+            <h3>Maqsadimiz</h3>
+            <p>Har bir o‘quvchimizni zamonaviy bilim, milliy qadriyatlar va halollik ruhida tarbiyalash — bizning asosiy vazifamizdir.</p>
+          </div>
+          <div class="about-card">
+            <h3>Kelajakka qarab</h3>
+            <p>Maktabimiz o‘quvchilari respublika va xalqaro olimpiadalarda, sport musobaqalarida faol ishtirok etib, qishlog‘imiz nomini yuksaltirmoqda.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWS ============ -->
+  <section class="news" id="news">
+    <div class="section-wrap">
+      <div class="section-head">
+        <span class="label">So‘nggi xabarlar</span>
+        <h2>Maktab yangiliklari</h2>
+        <p>Bu bo‘limni o‘zingiz tahrirlab, haqiqiy voqealar, tadbirlar va yutuqlar bilan to‘ldirishingiz mumkin.</p>
+      </div>
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-thumb"></div>
+          <div class="news-body">
+            <div class="news-date">Sentabr 2026</div>
+            <h3>Yangi o‘quv yili boshlandi</h3>
+            <p>1500 dan ortiq o‘quvchimiz yangi bilim sari birinchi qo‘ng‘iroqni eshitdi.</p>
+            <span class="news-link">Batafsil →</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-thumb"></div>
+          <div class="news-body">
+            <div class="news-date">Oktabr 2026</div>
+            <h3>Fan olimpiadasi g‘oliblari</h3>
+            <p>Tuman bosqichida o‘quvchilarimiz bir nechta fanlardan sovrindor bo‘lishdi.</p>
+            <span class="news-link">Batafsil →</span>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-thumb"></div>
+          <div class="news-body">
+            <div class="news-date">Noyabr 2026</div>
+            <h3>Sport musobaqalari</h3>
+            <p>Maktabimiz jamoasi futbol bo‘yicha tuman musobaqalarida ishtirok etdi.</p>
+            <span class="news-link">Batafsil →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEACHERS ============ -->
+  <section class="teachers" id="teachers">
+    <div class="section-wrap">
+      <div class="section-head">
+        <span class="label">Jamoamiz</span>
+        <h2>O‘qituvchilarimiz</h2>
+        <p>Bu yerga o‘qituvchilaringizning ism-familiyasi va fanini qo‘shishingiz mumkin.</p>
+      </div>
+      <div class="teach-grid">
+        <div class="teach-card">
+          <div class="teach-avatar">A</div>
+          <h3>Ism Familiya</h3>
+          <div class="subj">Matematika</div>
+        </div>
+        <div class="teach-card">
+          <div class="teach-avatar">B</div>
+          <h3>Ism Familiya</h3>
+          <div class="subj">Ona tili</div>
+        </div>
+        <div class="teach-card">
+          <div class="teach-avatar">D</div>
+          <h3>Ism Familiya</h3>
+          <div class="subj">Tarix</div>
+        </div>
+        <div class="teach-card">
+          <div class="teach-avatar">G</div>
+          <h3>Ism Familiya</h3>
+          <div class="subj">Fizika</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery" id="gallery">
+    <div class="section-wrap">
+      <div class="section-head">
+        <span class="label">Rasmlar</span>
+        <h2>Galereya</h2>
+        <p>Hozircha rasmlar yo‘q — pastdagi joylarga keyinchalik o‘z rasmlaringizni qo‘shasiz. Qanday qilishni pastda tushuntiraman.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item"><span class="icon">🖼</span> Maktab binosi</div>
+        <div class="gallery-item"><span class="icon">🖼</span> Sinf xonasi</div>
+        <div class="gallery-item"><span class="icon">🖼</span> Tadbirlar</div>
+        <div class="gallery-item"><span class="icon">🖼</span> Sport zali</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="section-wrap">
+      <div class="section-head">
+        <span class="label">Aloqa</span>
+        <h2>Biz bilan bog‘laning</h2>
+        <p>Savol va takliflaringiz bo‘lsa, quyidagi ma'lumotlar orqali murojaat qiling.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="icon">📍</div>
+            <div>
+              <h3>Manzil</h3>
+              <p>Hizirobod qishlog‘i, Uychi tumani, Namangan viloyati</p>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="icon">☎</div>
+            <div>
+              <h3>Telefon</h3>
+              <p>+998 (__) ___-__-__ — o‘zingizning raqamingizni qo‘shasiz</p>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="icon">✉</div>
+            <div>
+              <h3>Email</h3>
+              <p>maktab5.uychi@example.uz — o‘zgartirishingiz mumkin</p>
+            </div>
+          </div>
+        </div>
+        <div class="map-box">
+          <h3>Manzilni topish</h3>
+          <p>Bu joyga keyinroq Google Xarita havolasini qo‘shamiz, shunda hamma maktabni xaritada topa oladi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 — 5-maktab, Hizirobod qishlog‘i, Uychi tumani, Namangan viloyati. Barcha huquqlar himoyalangan.
+  </footer>
+
+</body>
+</html>
